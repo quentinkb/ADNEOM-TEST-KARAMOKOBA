@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+img {
+    width:200px;
+    height:120px;
+}
+.card-text {
+    font-size: 11px;
+}
+
+.tab-content > .active {
+    display: inline-flex !important;
+    flex-flow: wrap;
+}
+.tab-space {
+    margin: 20px;
+    font-style: italic;
+}
+
+footer {
+    background-color: #4B515D;
+}
