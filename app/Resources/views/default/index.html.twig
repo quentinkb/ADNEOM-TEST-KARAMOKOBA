@@ -1,83 +1,114 @@
 {% extends 'base.html.twig' %}
 {% set seasons = blackmiror.resources._embedded.episodes|orderSeasons %}
-{% block body %}
-    <div id="wrapper">
-        <div id="container">
-            <div id="welcome">
-                <h1>{{ blackmiror.resources.name }}</h1>
-                <p>{{ blackmiror.resources.genres | join(' ,') }}</p>
-            </div>
+{% set active = '' %}
 
-            <div>
-                <a target="_blank" href="{{ blackmiror.resources.url }}" style="float: left;">
-                    <img src="{{ blackmiror.resources.image.original }}" alt="Forest">
-                </a>
-                <div>{{ blackmiror.resources.summary | raw }}</div>
-                <br>
+{% block channels %}
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">About the programme</h4>
+                    <p class="text-muted">Charlie Brooker's series of unsettling dark drama brimming with near-future madness.</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Channels</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ blackmiror.resources.officialSite }}" class="text-white">NetFlix</a></li>
+                        <li><a href="{{ blackmiror.resources.url }}" class="text-white">tvmaze</a></li>
+                        <li><a href="#" class="text-white">imdb</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block body_title %}
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <strong>{{ blackmiror.resources.name }}</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">{{ blackmiror.resources.name }}</h1>
+                <p class="lead text-muted">{{ blackmiror.resources.summary | raw }}</p>
                 <p>Rating : {{ blackmiror.resources.rating.average }} Language : {{ blackmiror.resources.language }}</p>
             </div>
-            <br>
-            <br>
-            <div id="episodes">
-                {% for key, season in seasons%}
-                    <div class="season_{{ key }}">
-                        <ul style="list-style: none; display: inline;">
-                            <b>season {{ key }}</b>
-                            {% for episode in season%}
-                                <li>
-                                    <a target="_blank" href="{{ path('episode_view', {'id': episode.id}) }}" >
-                                        <img src="{{ episode.image.medium }}" alt="Forest" width="220" height="120">
-                                    </a>
-                                    <a href="{{ path('episode_view', {'id': episode.id}) }}">Episode {{ episode.number }} - {{ episode.name }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+        </section>
 
-                {% endfor %}
+        <div class="episode py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="list-group" id="seasonList" role="tablist">
+                            {% for key, season in seasons%}
+                                {% if key == 1 %}
+                                        {% set active = 'active' %}
+                                {% endif %}
+                                <a class="list-group-item list-group-item-action" data-toggle="list" href="#{{ 'season'~key }}" role="tab">{{ 'season'~key }}</a>
+                            {% endfor %}
+                       </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="tab-content episodes" id="nav-tabContent">
+                            {% for key, season in seasons%}
+                                <div class="tab-pane" id="{{ 'season'~key }}" role="tabpanel">
+                                    {% for episode in season%}
+                                        <div class="col-md-3">
+                                            <div class="card mb-4 box-shadow">
+                                                <img class="card-img-top" src="{{ episode.image.medium }}" alt="episode {{ episode.number }}" class="img-fluid img-thumbnail">
+                                                <div class="card-body">
+                                                    <p class="card-text">
+                                                        <a href="{{ path('episode_view', {'id': episode.id}) }}">
+                                                            Episode {{ episode.number }} - {{ episode.name }}
+                                                        </a>
+                                                    </p>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <small class="text-muted">{{ episode.runtime }} mins</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
-    </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
 {% endblock %}
 
 {% block stylesheets %}
 <style>
-    body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
-    h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
-    h1 { font-size: 36px; }
-    h2 { font-size: 21px; margin-bottom: 1em; }
-    p { margin: 0 0 1em 0; }
-    a { color: #0000F0; }
-    a:hover { text-decoration: none; }
-    code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
-    #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
-    #container { padding: 2em; }
-    #welcome, #status { margin-bottom: 2em; }
-    #welcome h1 span { display: block; font-size: 75%; }
-    #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
-    #icon-book { display: none; }
+img {
+    width:200px;
+    height:120px;
+}
+.card-text {
+    font-size: 11px;
+}
 
-    img {
-        border: 1px solid #ddd; /* Gray border */
-        border-radius: 4px;  /* Rounded border */
-        padding: 5px; /* Some padding */
-        width: 150px; /* Set a small width */
-    }
+.tab-pane  {
+    display: flex;
+    flex-wrap: wrap;
+}
 
-    /* Add a hover effect (blue shadow) */
-    img:hover {
-        box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
-    }
-
-    @media (min-width: 900px) {
-        #wrapper { width: 90%; margin: 2em auto; }
-        #icon-book { display: inline-block; }
-        #status a, #next a { display: block; }
-
-        @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
-    }
 </style>
 {% endblock %}
+
+
