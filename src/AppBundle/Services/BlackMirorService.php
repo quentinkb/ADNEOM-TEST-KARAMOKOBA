@@ -11,6 +11,7 @@ class BlackMirorService
 
 
     /**
+     * Permet d acceder à un service (API) rest
      * @param $method
      * @param $url
      * @param bool $data
@@ -50,20 +51,5 @@ class BlackMirorService
         curl_close($curl);
 
         return $result;
-    }
-
-    public function orderSeasonAndEpisodes($episodes)
-    {
-        $seasonKeys =[];
-        $seasons = [];
-        foreach ($episodes as $episode) {
-            if(!in_array($episode['season'], $seasonKeys)){
-                $key = $episode['season'];
-                $seasonKeys [] = $episode['season'];
-            }
-            $seasons[$key][$episode['number']]= $episode;
-        }
-
-        return $seasons;
     }
 }
