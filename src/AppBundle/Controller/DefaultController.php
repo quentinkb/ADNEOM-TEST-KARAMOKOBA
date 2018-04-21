@@ -39,8 +39,6 @@ class DefaultController extends Controller
     {
         $url   = $this->getParameter('blackmiror_api')."episodes/".$id;
         $episode = $blackMirorService->getOrPostFromAPI('GET', $url);
-        dump($episode);
-
         return $this->render('default/episode.html.twig', [
             'episode' => json_decode($episode, true),
         ]);
