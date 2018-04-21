@@ -35,6 +35,10 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        netflix_url: '%netflix_url%'
+        tvmaze_url: '%tvmaze_url%'
+        site_name: '%site_name%'
 
 # Doctrine Configuration
 doctrine:

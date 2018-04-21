@@ -22,7 +22,6 @@ class DefaultController extends Controller
         $token = $this->getParameter('ressource_token');
         $results = $blackMirorService->getOrPostFromAPI('GET', $url, false, $token);
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'blackmiror' => json_decode($results, true),
 
         ]);

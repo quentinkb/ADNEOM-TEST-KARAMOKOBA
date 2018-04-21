@@ -17,3 +17,12 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    #test api ( ressource token normalment laissé à vide )
+    ressource_api: http://adneomapisubject.herokuapp.com/blackmirror
+    ressource_token: TokenADNTest2018
+    blackmiror_api: http://api.tvmaze.com/
+    tvmaze_url: null
+    netflix_url: null
+    site_name: null
+

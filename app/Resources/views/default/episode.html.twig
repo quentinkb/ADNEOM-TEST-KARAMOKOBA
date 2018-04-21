@@ -1,19 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="row ml-1">
+        <a type="button" class="btn btn btn-primary btn-md mb-3 float-left" href="{{ path('homepage') }}">RETOUR</a>
+    </div>
     <section class="py-3 text-center text-lg-left">
-
-        <!--Section heading-->
-        <h1 class="h1 font-weight-bold text-center mb-5 pt-4">BlackMiror</h1>
-        <!--Section description-->
+        <h1 class="h1 font-weight-bold text-center mb-5 pt-4">BlackMirror</h1>
         <p class="text-center mb-5 pb-3">Season {{ episode.season }} - Episode {{ episode.number }}</p>
 
-        <!--Grid row-->
         <div class="row" style="margin: 20px;">
-
-            <!--Grid column-->
             <div class="col-lg-4 col-xl-4 pb-3">
-                <!--Featured image-->
                 <div class="view overlay rounded z-depth-2">
                     <img src="{{ episode.image.original }}" alt="Episode {{ episode.number }}"
                          class="img-fluid">
@@ -22,11 +18,7 @@
                     </a>
                 </div>
             </div>
-            <!--Grid column-->
-
-            <!--Grid column-->
             <div class="col-lg-6 col-xl-6">
-                <!--Excerpt-->
                 <a href="" class="green-text">
                     <h6 class="font-weight-bold pb-1">
                         <i class="fa fa-cutlery"></i> {{ episode.runtime}} mins</h6>
@@ -35,15 +27,10 @@
                     <strong>{{ episode.name }}</strong>
                 </h3>
                 <p>{{ episode.summary | raw }}</p>
-                <a class="btn btn-success btn-md mb-3" href="{{ episode.url }}">Read more</a>
+                <a type="button" class="btn btn btn-primary btn-md mb-3" href="{{ episode.url }}">Read more</a>
             </div>
-            <!--Grid column-->
-
         </div>
-        <!--Grid row-->
-
         <hr class="mb-5 mt-5 pb-3">
-
     </section>
 
 {% endblock %}
